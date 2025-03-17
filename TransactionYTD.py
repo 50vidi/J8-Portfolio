@@ -8,7 +8,6 @@ df = pd.read_csv('edb09f6e-0273-11f0-8785-0a8dd44a981d-1.csv')
 df['Symbol'] = df['Symbol'].fillna('USDT')
 print(df.isnull().sum())
 
-grouped = df.groupby('type')
 funding_fee_data = df[df['type'] == 'FUNDING_FEE']
 
 def detect_outliers(series):
@@ -18,11 +17,6 @@ def detect_outliers(series):
     lower_bound = Q1 - 1.5 * IQR
     upper_bound = Q3 + 1.5 * IQR
     return series[(series < lower_bound) | (series > upper_bound)]
-
-#for name, group in grouped:
-#    outliers = detect_outliers(group['Amount'])
-#    print(f"Outliers for transaction type '{name}':")
-#    print(outliers)
 
 #Date Formatter
 funding_fee_data['Date(UTC)'] = pd.to_datetime(funding_fee_data['Date(UTC)'], utc=True)
